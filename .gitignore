@@ -1,0 +1,5 @@
+build/
+dist/
+*.elf
+*.nds
+__pycache__/
