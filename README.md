@@ -32,15 +32,13 @@
 
 ## Скриншоты
 
-- `screenshots/01-clock-dark-theme.png` — часы, тёмная тема.
-- `screenshots/02-clock-light-theme.png` — часы, светлая тема.
-- `screenshots/03-stopwatch-dark-theme.png` — секундомер, тёмная тема.
-- `screenshots/04-stopwatch-light-theme.png` — секундомер, светлая тема.
-
 ![Часы, тёмная тема](screenshots/01-clock-dark-theme.png)
 ![Часы, светлая тема](screenshots/02-clock-light-theme.png)
 ![Секундомер, тёмная тема](screenshots/03-stopwatch-dark-theme.png)
 ![Секундомер, светлая тема](screenshots/04-stopwatch-light-theme.png)
+
+![Часы на реальном устройстве](screenshots/clock.png)
+![Секундомер на реальном устройстве](screenshots/timer.png)
 
 ## Структура проекта
 
