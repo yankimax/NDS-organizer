@@ -15,7 +15,7 @@ DATA     :=
 GRAPHICS := gfx
 AUDIO    :=
 ICON     :=
-NITRO    :=
+NITRO    := .nitrofs
 PYTHON   ?= python3
 FONT_TTF ?= tools/tahoma.ttf
 FONTGEN  := tools/ttf2nds.py
@@ -34,10 +34,10 @@ CXXFLAGS := $(CFLAGS) -fno-rtti -fno-exceptions
 ASFLAGS  := -g $(ARCH)
 LDFLAGS   = -specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS := -lnds9
+LIBS := -lfat -lnds9
 
 ifneq ($(strip $(NITRO)),)
-LIBS := -lfilesystem -lfat $(LIBS)
+LIBS := -lfilesystem $(LIBS)
 endif
 ifneq ($(strip $(AUDIO)),)
 LIBS := -lmm9 $(LIBS)
@@ -115,8 +115,13 @@ all: rebuild
 
 rebuild:
 	@$(MAKE) --no-print-directory clean
+	@mkdir -p $(CURDIR)/$(NITRO)/locales
+	@rm -f $(CURDIR)/$(NITRO)/locales/*.lng
+	@cp -f $(CURDIR)/locales/*.lng $(CURDIR)/$(NITRO)/locales/ 2>/dev/null || true
 	@mkdir -p $(DIST)
 	@$(MAKE) --no-print-directory $(BUILD)
+	@mkdir -p $(DIST)/locales
+	@cp -f $(CURDIR)/locales/*.lng $(DIST)/locales/ 2>/dev/null || true
 
 $(BUILD):
 	@mkdir -p $@
@@ -130,7 +135,7 @@ $(DIST):
 
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(DIST) $(TARGET).elf $(TARGET).nds $(SOUNDBANK)
+	@rm -fr $(BUILD) $(DIST) $(NITRO) $(TARGET).elf $(TARGET).nds $(SOUNDBANK)
 
 fonts: $(FONT_TTF) $(FONTGEN)
 	@$(PYTHON) $(FONTGEN) console --input $(FONT_TTF) --output gfx/font.png --encoding cp1251 --start 32 --end 255 --cell-width 8 --cell-height 8 --font-size 9

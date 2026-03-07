@@ -6,7 +6,8 @@
 
 typedef enum {
     MODE_CLOCK = 0,
-    MODE_STOPWATCH = 1
+    MODE_STOPWATCH = 1,
+    MODE_SETTINGS = 2
 } AppMode;
 
 typedef struct {
@@ -15,9 +16,10 @@ typedef struct {
 
 typedef struct {
     AppMode mode;
+    AppMode returnMode;
     bool stopwatchRunning;
     u32 stopwatchFrames;
-    int themeIndex;
+    bool settingsComboLatch;
     Theme theme;
 } AppState;
 

@@ -57,9 +57,11 @@ void topDisplayApplyTheme(const Theme *theme) {
 }
 
 void topDisplayRenderTime(const char *timeText) {
-    const int len = (int)strlen(timeText);
+    const int rawLen = (int)strlen(timeText);
+    const int len = (rawLen > MAX_TIME_CHARS) ? MAX_TIME_CHARS : rawLen;
     const int spacing = 1;
     int totalWidth = 0;
+
     for (int i = 0; i < len; i++) {
         totalWidth += glyphAdvance(timeText[i]);
     }

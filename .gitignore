@@ -3,3 +3,4 @@ dist/
 *.elf
 *.nds
 __pycache__/
+.nitrofs/
