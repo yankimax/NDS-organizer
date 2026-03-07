@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "localization.h"
+#include "text_utils.h"
 
 #define LOCALES_DIRECTORY "nitro:/locales"
 #define MAX_LOCALE_LINE_LENGTH 192
@@ -31,23 +32,6 @@ static LocalizationLanguage gLanguages[LOCALIZATION_MAX_LANGUAGES];
 static int gLanguageCount = 0;
 static int gCurrentLanguageIndex = 0;
 static bool gInitialized = false;
-
-static void copyString(char *dst, size_t dstSize, const char *src) {
-    size_t i;
-
-    if (dst == NULL || dstSize == 0) {
-        return;
-    }
-    if (src == NULL) {
-        dst[0] = '\0';
-        return;
-    }
-
-    for (i = 0; i + 1 < dstSize && src[i] != '\0'; i++) {
-        dst[i] = src[i];
-    }
-    dst[i] = '\0';
-}
 
 static int unicodeToCp1251(unsigned codepoint) {
     if (codepoint < 0x80U) {
@@ -242,7 +226,7 @@ static bool parseLanguageFile(const char *path,
     }
 
     memset(&parsed, 0, sizeof(parsed));
-    copyString(parsed.id, sizeof(parsed.id), languageId);
+    copyStringSafe(parsed.id, sizeof(parsed.id), languageId);
 
     while (fgets(line, sizeof(line), file) != NULL) {
         char *key;
